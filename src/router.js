@@ -1,27 +1,76 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Main from "@/layouts/Main";
+import Home from "@/views/Home";
+import CourseListLayout from "@/layouts/CourseListLayout";
+import UserLayout from "@/layouts/UserLayout";
+import CourseInfo from "@/layouts/CourseInfo";
+import ChapterVideoLayout from "@/layouts/ChapterVideoLayout";
+import Login from "@/views/Login";
+import PersonCenter from "@/views/userView/PersonCenter";
+import MyCourse from "@/views/userView/MyCourse";
+import MyNotes from "@/views/userView/MyNotes";
+import MyMessage from "@/views/userView/MyMessage";
+import SafeSetting from "@/views/userView/SafeSetting";
+import Editor from "@/views/editor/Editor";
+import AdminHome from "@/views/admin/AdminHome";
 
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-  base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: Home
+      path:'/login',
+      component: Login
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: function () { 
-        return import(/* webpackChunkName: "about" */ './views/About.vue')
-      }
+      path: '/',
+      component: Home,
+      children: [
+        {
+          path: '',
+          name: 'main',
+          component: Main
+        },
+        {
+          path: 'courseList',
+          name: 'courseList',
+          component: CourseListLayout
+        },
+        {
+          path: 'userLayout',
+          name: 'userLayout',
+          component: UserLayout,
+          children:[
+            {path:'',component:PersonCenter},
+            {path:'MyCourse',component:MyCourse},
+            {path:'MyNotes',component:MyNotes},
+            {path:'MyMessage',component:MyMessage},
+            {path:'SafeSetting',component:SafeSetting},
+          ]
+        },
+        {
+          path: 'courseInfo',
+          name: 'courseInfo',
+          component:CourseInfo
+        }
+      ]
+    },
+    {
+      path:'/ChapterVideoLayout',
+      component:ChapterVideoLayout
+    },
+    {
+      path:'/editor',
+      component:Editor
+    },
+
+      //admin
+
+    {
+      path:'/adminhome',
+      component:AdminHome
     }
   ]
 })
