@@ -2,8 +2,8 @@
     <div class="row justify-center  hot-note" style="padding-top:50px;padding-bottom: 100px;background: rgb(245,245,245);" >
         <div class="col-10">
             <span style="padding:2px; font-size: 20px; height: 60px; line-height: 60px; font-family: PingFang SC; color: #4d555d; font-weight: bold; border-bottom:#26A69A 2px solid">优质笔记 & 心得</span>
-            <div class="row justify-start  gutter-md" style="text-align: center">
-                <div class="col-4 wow slideInLeft">
+            <div class="row justify-start  gutter-md" style="text-align: center;">
+                <div class="col-4">
                     <q-card >
                         <q-card-media>
                             <img src="https://images.unsplash.com/photo-1550664865-e35e69d95f48?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80">
@@ -27,7 +27,7 @@
                     </q-card>
                 </div>
 
-                <div class="col-4 wow fadeIn">
+                <div class="col-4 " >
                     <q-card >
                         <q-card-media>
                             <img src="https://images.unsplash.com/photo-1554232682-b9ef9c92f8de?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
@@ -53,7 +53,7 @@
 
 
 
-                <div class="col-4 wow slideInRight ">
+                <div class="col-4">
                     <q-card >
                         <q-card-media>
                             <img src="https://images.unsplash.com/photo-1551369277-a930560141bb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1076&q=80">

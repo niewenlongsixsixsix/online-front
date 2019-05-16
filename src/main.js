@@ -13,15 +13,20 @@ import Quasar from 'quasar'
 import animate from 'animate.css'
 import wowjs from 'wowjs'
 import axios from 'axios'
-import echarts from 'echarts'
 import Cookies from 'js-cookie'
+import vCharts from 'v-charts'
+import Vuelidate from 'vuelidate'
+import Video from 'video.js'
+import 'video.js/dist/video-js.css'
 
 
 Vue.prototype.$axios = axios
-Vue.prototype.$echarts = echarts
+Vue.prototype.$video = Video
 Vue.use(Cookies)
 Vue.use(wowjs)
 Vue.use(animate)
+Vue.use(vCharts)
+Vue.use(Vuelidate)//安装插件
 Vue.use(Quasar, {
   config: {}
  })

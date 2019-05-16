@@ -1,5 +1,5 @@
 <template>
-
+  <q-scroll-area style="position: absolute; height: 100%; width: 100%;">
   <!--首页大致框架-->
   <div class="home">
 
@@ -49,7 +49,7 @@
               <i class="fab fa-phoenix-squadron" style="color: #fd7e14; font-size: 35px"></i>
 
               <q-toolbar-title>
-                <strong style="color: #5e5e5e;">万千城市</strong>
+                <strong style="color: #5e5e5e;">酸奶在线网课</strong>
               </q-toolbar-title>
 
               <q-search  color="warning" v-model="searchValue"  float-label="search" />
@@ -71,7 +71,7 @@
                   -->
                   <q-card  >
                     <q-card-media>
-                      <img  src="./touxiang.jpg">
+                      <img  src="http://img1.imgtn.bdimg.com/it/u=647274116,1756187255&fm=26&gp=0.jpg">
                     </q-card-media>
                     <q-card-title class="text-center ">
                       万千城市
@@ -80,12 +80,12 @@
                     <q-card-actions align="center">
 
                         <q-btn flat color="warning" label="个人中心" @click="openUserLayout" />
-                        <q-btn flat color="secondary" label="安全退出" />
+                        <q-btn flat color="secondary" @click="logout" label="安全退出" />
 
                     </q-card-actions>
                   </q-card>
                 </q-popover>
-                  <img class="home-img" style="width: 40px; height: 40px;" src="./touxiang.jpg"/>
+                  <img class="home-img" style="width: 40px; height: 40px;" src="http://img1.imgtn.bdimg.com/it/u=647274116,1756187255&fm=26&gp=0.jpg"/>
               </div>
             </q-toolbar>
           </div>
@@ -124,10 +124,14 @@
 
     </q-layout>
   </div>
+  </q-scroll-area>
 </template>
 
 <style>
 
+  .home{
+    background-image: url('https://class.imooc.com//static/module/index/img/diff-bg.png')
+  }
   .home .q-if-standard.q-if-has-label{
     padding-top: 0px;
   }
@@ -156,6 +160,22 @@ export default {
   },
 
   methods:{
+
+    logout(){
+      this.$axios({
+        method:'get',
+        url:'/api/login/logout'
+      }).then(response=>{
+        if(response.data.success){
+          this.$q.notify({
+            type: 'positive',
+            timeout: 1000,
+            position: 'top',
+            message:"退出登录"
+          })
+        }
+      })
+    },
     deleteAction () {
       // @ok事件仍将被触发
       this.$q.notify('Deleting...')

@@ -5,10 +5,6 @@
 </template>
 
 <style>
-
-  #app{
-    background-image: url('https://class.imooc.com//static/module/index/img/diff-bg.png')
-  }
 </style>
 <script>
   import QIcon from "quasar-framework/src/components/icon/QIcon";

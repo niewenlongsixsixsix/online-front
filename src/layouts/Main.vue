@@ -1,6 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
 
-    <div>
+    <div class="main">
 
         <!--轮播图组件-->
         <MCarousel></MCarousel>
@@ -19,11 +19,31 @@
                 换一批&nbsp;<q-icon name="refresh"/>
                 </span>
             </template>
+
+            <template slot-scope="props">
+                <div class="col-3" @click="alertImgTitle(props.item.title)">
+                    <q-card-media  class="shadow-10"   style="border-radius:10px">
+                        <img class="m-img" :src="props.item.imgUrl">
+                        <!-- 注意slot="overlay" -->
+                        <q-card-title slot="overlay" class="cursor-pointer">
+                            <div key="title" >
+                                {{props.item.title}}
+                                <div>
+                                    <q-icon name="visibility">
+                                    </q-icon>
+                                    &nbsp;{{props.item.view}}
+                                </div>
+                            </div>
+                        </q-card-title>
+
+                    </q-card-media>
+                </div>
+            </template>
         </CourseShow>
 
 
         <!--最新课程组件-->
-        <CourseShow class=" wow slideInUp " style="background: rgb(255,255,255);" v-bind:imgList="newCourseList">
+        <CourseShow class=" wow slideInUp " style="background: rgb(255,255,255); visibility: visible;" v-bind:imgList="newCourseList">
             <!--左侧标题-->
             <template v-slot:courseTitle>
                 <span style="padding:2px; font-size: 20px; height: 80px; line-height: 80px; border-bottom: 2px #8d84cc solid; color: #4d555d; font-weight: bold;">
@@ -36,6 +56,26 @@
                 换一批&nbsp;<q-icon name="refresh"/>
                 </span>
             </template>
+
+            <template slot-scope="props">
+                <div class="col-3" @click="alertImgTitle(props.item.title)">
+                    <q-card-media  class="shadow-10"   style="border-radius:10px">
+                        <img class="m-img" :src="props.item.imgUrl">
+                        <!-- 注意slot="overlay" -->
+                        <q-card-title slot="overlay" class="cursor-pointer">
+                            <div key="title" >
+                                {{props.item.title}}
+                                <div>
+                                    <q-icon name="visibility">
+                                    </q-icon>
+                                    &nbsp;{{props.item.view}}
+                                </div>
+                            </div>
+                        </q-card-title>
+
+                    </q-card-media>
+                </div>
+            </template>
         </CourseShow>
 
         <!--优质笔记-->
@@ -47,10 +87,10 @@
 </template>
 
 <script>
-    import HotNotes from "@/views/HotNotes";
-    import CourseShow from "@/views/CourseShow";
+    import HotNotes from "@/views/note/HotNotes";
+    import CourseShow from "@/views/course/CourseShow";
     import {WOW} from 'wowjs';
-    import MCarousel from "@/views/MCarousel";
+    import MCarousel from "@/views/carousel/MCarousel";
 
     export default {
         name: "Main",
@@ -62,6 +102,9 @@
           }
         },
         methods:{
+          alertImgTitle(title){
+              alert(title);
+          },
           //获取最热的笔记列表
           getHotCourseList(){
               this.$axios({
@@ -100,4 +143,14 @@
 
 <style scoped>
 
+    .main img{
+        cursor: pointer;
+        transition:all 0.8s;
+        height: 190px;
+    }
+
+    .main img:hover{
+        transform: scale(1.3);
+
+    }
 </style>

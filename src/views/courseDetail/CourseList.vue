@@ -7,8 +7,11 @@
                         </dt>
                         <dd>
                             <ul class="categoryUl">
-                                <li><a class="aActive"  href="#">全部</a></li>
-                                <li v-for="item in 18"><a href="#">离散数学 + {{item}}</a></li>
+                                <li><a   href="#">全部</a></li>
+                                <li><a class="aActive" href="#">后端</a></li>
+                                <li><a href="#">前端</a></li>
+                                <li><a href="#">数据库</a></li>
+                                <li><a href="#">Android</a></li>
                             </ul>
                         </dd>
                     </dl>
@@ -18,12 +21,12 @@
                         </dt>
                         <dd>
                             <ul class="categoryUl">
-                                <li><a class="aActive"  href="#">全部</a></li>
-                                <li ><a href="#">离散数学</a></li>
-                                <li><a  href="#">离散数学</a></li>
-                                <li><a href="#">离散数学</a></li>
-                                <li><a href="#">离散数学</a></li>
-                                <li><a href="#">离散数学</a></li>
+                                <li><a   href="#">全部</a></li>
+                                <li ><a href="#" class="aActive">Java</a></li>
+                                <li><a  href="#">Mybatis</a></li>
+                                <li><a href="#">SpringMVC</a></li>
+                                <li><a href="#">Redis</a></li>
+                                <li><a href="#">Shiro</a></li>
                             </ul>
                         </dd>
                     </dl>
@@ -56,7 +59,7 @@
 
 <script>
     import QCard from "quasar-framework/src/components/card/QCard";
-    import CourseShow from "@/views/CourseShow";
+    import CourseShow from "@/views/course/CourseShow";
     import ChapterList from "@/views/courseDetail/ChapterList";
     export default {
         name: "CourseList",
@@ -102,7 +105,7 @@
         color: #fff;
         background: #ff662f;
     }
-    
+
     dl {
         display: block;
         clear:both;

@@ -7,7 +7,7 @@
                     <q-item-side image="http://photo.tuchong.com/4067228/f/508035880.jpg" />
                     <q-item-main label="Mountains Documentary" />
                     <q-item-side right>
-                        <q-btn  color="warning" outline label="继续观看" />
+                        <q-btn  color="warning" size="small" outline label="继续观看" />
                     </q-item-side>
                 </q-item>
                 <q-item-separator />
@@ -18,7 +18,7 @@
                         <q-item-tile sublabel>Empower your development skills</q-item-tile>
                     </q-item-main>
                     <q-item-side right>
-                        <q-btn  color="warning" outline label="继续观看" />
+                        <q-btn  color="warning" size="small" outline label="继续观看" />
                     </q-item-side>
                 </q-item>
 
@@ -30,7 +30,7 @@
                         <q-item-tile sublabel>Empower your development skills</q-item-tile>
                     </q-item-main>
                     <q-item-side right>
-                        <q-btn  color="warning" outline label="继续观看" />
+                        <q-btn  color="warning" size="small" outline label="继续观看" />
                     </q-item-side>
                 </q-item>
                 <q-item-separator />
@@ -41,7 +41,7 @@
                         <q-item-tile sublabel>Empower your development skills</q-item-tile>
                     </q-item-main>
                     <q-item-side right>
-                        <q-btn  color="warning" outline label="继续观看" />
+                        <q-btn  color="warning" size="small" outline label="继续观看" />
                     </q-item-side>
                 </q-item>
                 <q-item-separator />
@@ -52,7 +52,7 @@
                         <q-item-tile sublabel>Empower your development skills</q-item-tile>
                     </q-item-main>
                     <q-item-side right>
-                        <q-btn  color="warning" outline label="继续观看" />
+                        <q-btn  color="warning" size="small" outline label="继续观看" />
                     </q-item-side>
                 </q-item>
                 <q-item-separator />
@@ -63,12 +63,12 @@
                         <q-item-tile sublabel>Empower your development skills</q-item-tile>
                     </q-item-main>
                     <q-item-side right>
-                        <q-btn  color="warning" outline label="继续观看" />
+                        <q-btn  color="warning" size="small" outline label="继续观看" />
                     </q-item-side>
                 </q-item>
             </q-list>
                 <q-pagination
-                        style="margin: 10px auto; width: 300px;"
+                        style="margin: 30px auto; width: 300px;"
                         v-model="page4"
                         color="warning"
                         :min="1"

@@ -6,14 +6,20 @@ import CourseListLayout from "@/layouts/CourseListLayout";
 import UserLayout from "@/layouts/UserLayout";
 import CourseInfo from "@/layouts/CourseInfo";
 import ChapterVideoLayout from "@/layouts/ChapterVideoLayout";
-import Login from "@/views/Login";
+import Login from "@/views/Login/Login";
 import PersonCenter from "@/views/userView/PersonCenter";
 import MyCourse from "@/views/userView/MyCourse";
 import MyNotes from "@/views/userView/MyNotes";
 import MyMessage from "@/views/userView/MyMessage";
 import SafeSetting from "@/views/userView/SafeSetting";
 import Editor from "@/views/editor/Editor";
-import AdminHome from "@/views/admin/AdminHome";
+import RegisterHome from "@/views/register/RegisterHome";
+import TeacherManagerHome from "@/views/teacherManager/TeacherManagerHome";
+import TeacherCourseManager from "@/views/teacherManager/menu/TeacherCourseManager";
+import BigChapterManager from "@/views/teacherManager/menu/BigChapterManager";
+import SmallChapterManager from "@/views/teacherManager/menu/SmallChapterManager";
+import TeacherInfoCenter from "@/views/teacherManager/menu/TeacherInfoCenter";
+import TeacherManagerCenter from "@/views/teacherManager/menu/TeacherManagerCenter";
 
 Vue.use(Router)
 
@@ -23,6 +29,46 @@ export default new Router({
     {
       path:'/login',
       component: Login
+    },
+    {
+      path:'/register',
+      component:RegisterHome
+    },
+    {
+      path:'/teacherManagerHome',
+      component:TeacherManagerHome,
+      children:[
+        {
+          path:'/',
+          component:TeacherInfoCenter
+        },
+        {
+          path:'teacherManagerCenter',
+          component:TeacherManagerCenter,
+          children:[
+            {
+              path:'/',
+              component:TeacherCourseManager
+            },
+            {
+              path:'BigChapterManager/:bigChapterId',
+              component:BigChapterManager
+            },
+            {
+              path:'SmallChapterManager/:smallChapterId',
+              component:SmallChapterManager
+            }
+          ]
+        }
+        // {
+        //   path:'/bigChapterManager',
+        //   component:BigChapterManager
+        // },
+        // {
+        //   path:'/smallChapterManager',
+        //   component:SmallChapterManager
+        // }
+      ]
     },
     {
       path: '/',
@@ -66,11 +112,5 @@ export default new Router({
       component:Editor
     },
 
-      //admin
-
-    {
-      path:'/adminhome',
-      component:AdminHome
-    }
   ]
 })

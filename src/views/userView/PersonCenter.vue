@@ -6,13 +6,42 @@
             </div>
 
             <span style="color:#5e5e5e; font-size: 16px">Later equals never</span>
+
+            <q-uploader
+                    :url="url"
+                    name="smallChapterImg"
+                    :additional-fields="userInfo"
+                    extensions=".gif, .jpg, .jpeg, .png"
+                    hide-upload-button
+                    ref="upload"
+                    @finish="haha"
+            />
+            <q-btn label="上传" @click="uploadImg"/>
         </div>
     </div>
 </template>
 
 <script>
+    import QBtn from "quasar-framework/src/components/btn/QBtn";
     export default {
-        name: "PersonCenter"
+        name: "PersonCenter",
+        components: {QBtn},
+        data(){
+            return{
+                url:'/api/chapter/addSmallerChapter',
+                userInfo:[
+                    {name:'id',value:3}
+                ]
+            }
+        },
+        methods:{
+            haha(val){
+             alert(val);
+            },
+            uploadImg(){
+                this.$refs.upload.upload();
+            }
+        }
     }
 </script>
 

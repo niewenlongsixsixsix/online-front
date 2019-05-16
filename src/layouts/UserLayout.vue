@@ -62,6 +62,10 @@
 </script>
 
 <style scoped>
+
+    .userInfo{
+        background-image: url('https://class.imooc.com//static/module/index/img/diff-bg.png')
+    }
     .userInfo q-list {
         border:none
     }

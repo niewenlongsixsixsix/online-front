@@ -68,7 +68,7 @@
     import QCardTitle from "quasar-framework/src/components/card/QCardTitle";
     import {WOW} from 'wowjs';
     import QLayoutFooter from "quasar-framework/src/components/layout/QLayoutFooter";
-    import CourseShow from "@/views/CourseShow";
+    import CourseShow from "@/views/course/CourseShow";
     export default {
         name: "ChapterVideoLayout",
         components: {QLayoutFooter, QCardTitle, QCardMain, QCard, QToolbar, QPageContainer,ChapterList,CourseShow},
