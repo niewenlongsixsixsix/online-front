@@ -1,5 +1,5 @@
 <template>
-    <div class="row justify-center courseShow  hot-course" style="margin-top: 10px; padding-top:20px;padding-bottom: 30px" >
+    <div class="row justify-center courseShow  hot-course" style="margin-top: 30px; padding-top:20px;padding-bottom: 30px" >
         <div class="col-10">
             <slot name="courseTitle"></slot>
             <div class="row justify-start gutter-md text-center">

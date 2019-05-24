@@ -70,7 +70,6 @@
     import email from "vuelidate/src/validators/email";
     export default {
         components: {QField, QCard},
-        el: '#demo',
         data(){
             return{
                 loading: false,
@@ -114,10 +113,9 @@
                     return;
                 }
 
-
                 this.$axios({
                     method:'post',
-                    url:'/api/login/AccountAuth',
+                    url:'/api/login/AccountAuth/0',
                     data:{
                         username:this.form.username,
                         password:this.form.password
@@ -126,16 +124,24 @@
                 }).then(response=>{
                     setTimeout(()=>{
                         if(response.data.success){
-                            console.log(response.headers)
-                            console.log(document.cookie)
+                            localStorage.setItem("cookie",document.cookie);
+                            localStorage.setItem("type",response.data.type)
+                            console.log(localStorage.getItem("cookie"))
+                            localStorage.setItem("currentLoginUserId",response.data.userId);
+                            localStorage.setItem("avatar",response.data.avatar);
+                            this.$store.commit('changeAvatar',response.data.avatar);
                             this.$q.notify({
                                 type: 'positive',
                                 timeout: 2000,
                                 position: 'top',
                                 message:'登录成功'
-
                             })
-                            this.$router.push("/")
+                            if(response.data.type == 0){
+                                this.$router.push("/")
+                            }else{
+                                this.$router.push("/teacherManagerHome")
+                            }
+
                         }else{
                             this.$q.notify({
                                 type: 'negative',

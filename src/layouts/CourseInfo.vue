@@ -1,19 +1,20 @@
 <template>
-    <div style="margin-top: 60px; margin-bottom: 150px;" class="courseInfo">
-        <div class="row justify-center">
-            <div class="col-8 shadow-2">
-                <q-card>
-                    <q-card-media overlay-position="full" style="text-align: center">
-                        <!-- Notice the slot="overlay" -->
+    <q-layout>
+        <div style="margin-top: 60px; margin-bottom: 150px;" class="courseInfo">
+            <div class="row justify-center">
+                <div class="col-8 shadow-2">
+                    <q-card>
+                        <q-card-media overlay-position="full" style="text-align: center">
+                            <!-- Notice the slot="overlay" -->
 
-                        <q-parallax src="https://images.unsplash.com/photo-1550091840-165dc006661a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80" :height="300">
-                            <div slot="loading">Loading...</div>
-                        </q-parallax>
-                        <q-card-title slot="overlay" >
-                            <h3>大型电商系统商品数据库设计</h3>
-                            <h5 slot="subtitle">宋一峰</h5>
-                        </q-card-title>
-                    </q-card-media>
+                            <q-parallax :src="'/api/upload' + catalog.course.imgUrl" :height="300">
+                                <div slot="loading">Loading...</div>
+                            </q-parallax>
+                            <q-card-title slot="overlay" >
+                                <h3>{{catalog.course.title}}</h3>
+                                <h5 slot="subtitle">宋一峰</h5>
+                            </q-card-title>
+                        </q-card-media>
 
                         <q-tabs inverted no-pane-border  color="warning" v-model="tab" >
                             <!-- 选项卡 - 注意slot="title" -->
@@ -22,7 +23,25 @@
 
                             <!-- 目标 -->
                             <q-tab-pane name="1">
-                                <ChapterList></ChapterList>
+                                <q-list highlight sparse inset-separator link v-for="item in catalog.chapterInfo">
+                                    <q-list-header>{{item.bigChapterName}}</q-list-header>
+                                    <ChapterList :smallChapters="item.smallChapters">
+                                        <template slot-scope="props">
+                                            <q-list highlight sparse inset-separator link>
+                                                <q-item  @click.native="jumpToVideoPlay(props.msg.id)">
+                                                    <q-item-side >
+                                                        <q-item-tile color="warning"  icon="play_circle_filled" />
+                                                    </q-item-side>
+                                                    <q-item-main>
+                                                        <q-item-tile label>{{props.msg.title}}</q-item-tile>
+                                                    </q-item-main>
+                                                </q-item>
+                                            </q-list>
+                                        </template>
+                                    </ChapterList>
+
+                                </q-list>
+
                             </q-tab-pane>
                             <q-tab-pane name="2">
                                 <div>
@@ -104,31 +123,41 @@
                             </q-tab-pane>
                         </q-tabs>
 
-                </q-card>
+                    </q-card>
 
 
+                </div>
+                <q-modal v-model="opened" >
+                    <q-modal-layout style="width: 600px; border-radius:10px;  height: 230px;">
+                        <q-toolbar color="warning" slot="header">
+                            <q-btn flat round  icon="clear" @click="opened = false"  size="18px" />
+                            <q-toolbar-title>
+                                发表评价
+                            </q-toolbar-title>
+                            <q-btn flat round  icon="send"   size="18px" />
+                        </q-toolbar>
+                        <q-input
+                                type="textarea"
+                                float-label="请发表你的评价"
+                                :max-height="50"
+                                rows="5"
+                                v-model="commentContent"
+                                color="warning"
+                        />
+                    </q-modal-layout>
+
+                </q-modal>
             </div>
-            <q-modal v-model="opened" >
-                <q-modal-layout style="width: 600px; border-radius:10px;  height: 230px;">
-                    <q-toolbar color="warning" slot="header">
-                        <q-btn flat round  icon="clear" @click="opened = false"  size="18px" />
-                        <q-toolbar-title>
-                            发表评价
-                        </q-toolbar-title>
-                        <q-btn flat round  icon="send"   size="18px" />
-                    </q-toolbar>
-                    <q-input
-                            type="textarea"
-                            float-label="请发表你的评价"
-                            :max-height="50"
-                            rows="5"
-                            color="warning"
-                    />
-                </q-modal-layout>
-
-            </q-modal>
         </div>
-    </div>
+
+        <q-page-sticky v-if="loveVisible"  position="right" :offset="[30, 30]">
+            <q-btn round color="negative" @click="addLove" icon="favorite_border" />
+        </q-page-sticky>
+        <q-page-sticky v-else position="right" :offset="[30, 30]">
+            <q-btn round color="negative" @click="deleteLove" icon="favorite" />
+        </q-page-sticky>
+    </q-layout>
+
 </template>
 
 <script>
@@ -137,26 +166,86 @@
     import QBtn from "quasar-framework/src/components/btn/QBtn";
     import QModalLayout from "quasar-framework/src/components/modal/QModalLayout";
     import ChapterList from "@/views/courseDetail/ChapterList";
+    import QLayout from "quasar-framework/src/components/layout/QLayout";
 
     export default {
         name: "CourseInfo",
-        components: {QModalLayout, QBtn, QCardMain,ChapterList},
+        components: {QLayout, QModalLayout, QBtn, QCardMain,ChapterList},
         data(){
             return{
                 editor:null,
+                loveVisible:true,
                 tab:'1',
+                commentContent:'',
                 opened:false,
+                catalog:[]
             }
 
         },
+        methods:{
+            addLove(){
+              this.$axios({
+                  method:'get',
+                  url:'/api/loveCourse/addLoveCourse/' + this.$route.params.courseId
+              }).then(response=>{
+                  if(response.data.success){
+                      this.checkLoveCourseStatus();
+                      this.$q.notify({
+                          type: 'positive',
+                          timeout: 2000,
+                          position: 'top',
+                          message:'收藏成功'
+                      })
+                  }
+              })
+            },
+
+            deleteLove(){
+                this.$axios({
+                    method:'get',
+                    url:'/api/loveCourse/deleteLoveCourse/' + this.$route.params.courseId
+                }).then(response=>{
+                    if(response.data.success){
+                        this.checkLoveCourseStatus();
+                        this.$q.notify({
+                            type: 'negative',
+                            timeout: 2000,
+                            position: 'top',
+                            message:'取消收藏'
+                        })
+                    }
+                })
+            },
+            jumpToVideoPlay(smallChapterId){
+                this.$router.push("/ChapterVideoLayout/" + smallChapterId)
+            },
+          getCatalogByCourseId(courseId){
+              this.$axios({
+                  method:'get',
+                  url:'/api/smallChapter/getCatalogByCourseId/' + courseId
+              }).then(response=>{
+                  this.catalog = response.data
+                  console.log(this.catalog);
+              })
+          },
+            checkLoveCourseStatus(){
+                this.$axios({
+                    method:'get',
+                    url:'/api/loveCourse/checkStatus/' + this.$route.params.courseId
+                }).then(response=>{
+                    if(response.data){
+                        this.loveVisible = false
+                    }else{
+                        this.loveVisible = true
+                    }
+                })
+            }
+        },
+        created(){
+          this.getCatalogByCourseId(this.$route.params.courseId);
+        },
         mounted(){
-            let editor2 = new E('#editor');
-            editor2.customConfig.menus = [
-                'foreColor',
-                'emoticon',
-                'undo'
-            ];
-            editor2.create()
+            this.checkLoveCourseStatus();
         }
     }
 </script>

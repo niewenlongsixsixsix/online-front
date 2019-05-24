@@ -46,22 +46,14 @@
           <div class="col-11">
             <q-toolbar color="fontcolor" inverted style="height: 64px;" >
 
-              <i class="fab fa-phoenix-squadron" style="color: #fd7e14; font-size: 35px"></i>
+              <i class="fab fa-phoenix-squadron" @click="jumpMain" style="color: #fd7e14; font-size: 35px;cursor: pointer"></i>
 
               <q-toolbar-title>
-                <strong style="color: #5e5e5e;">酸奶在线网课</strong>
+                <strong style="color: #5e5e5e; cursor: pointer" @click="jumpMain">酸奶在线网课</strong>
               </q-toolbar-title>
 
-              <q-search  color="warning" v-model="searchValue"  float-label="search" />
 
-              <q-btn flat round dense icon="mail" color="tertiary" size="18px"/>
-              <q-btn flat round dense icon="notifications" color="tertiary" size="18px" />
-              <q-btn flat round dense icon="share" color="tertiary" @click="actionSheet = !actionSheet" size="18px" />
-
-              <!--<div style="margin-left: 10px">-->
-                <!--<a href="#" style=" text-decoration:none; color: #555;">登录</a>&nbsp;&nbsp;/&nbsp;&nbsp;-->
-                <!--<a href="#" style=" text-decoration:none; color: #555">注册</a>-->
-              <!--</div>-->
+              <q-btn flat round dense icon="create" color="tertiary" @click="jumpEditor" size="18px"/>
 
               <div style="margin-left: 10px">
                 <q-popover style="width: 250px; margin-top: 13px;" anchor="bottom middle" self="top middle" >
@@ -71,7 +63,7 @@
                   -->
                   <q-card  >
                     <q-card-media>
-                      <img  src="http://img1.imgtn.bdimg.com/it/u=647274116,1756187255&fm=26&gp=0.jpg">
+                      <img  :src="$store.getters.getUserAvatar">
                     </q-card-media>
                     <q-card-title class="text-center ">
                       万千城市
@@ -85,7 +77,7 @@
                     </q-card-actions>
                   </q-card>
                 </q-popover>
-                  <img class="home-img" style="width: 40px; height: 40px;" src="http://img1.imgtn.bdimg.com/it/u=647274116,1756187255&fm=26&gp=0.jpg"/>
+                  <img class="home-img" style="width: 40px; height: 40px;" :src="$store.getters.getUserAvatar"/>
               </div>
             </q-toolbar>
           </div>
@@ -161,12 +153,20 @@ export default {
 
   methods:{
 
+    jumpMain(){
+      this.$router.push("/")
+    },
+    jumpEditor(){
+      this.$router.push('/editor')
+    },
     logout(){
       this.$axios({
         method:'get',
         url:'/api/login/logout'
       }).then(response=>{
         if(response.data.success){
+          localStorage.removeItem("cookie");
+          this.$router.push("/login")
           this.$q.notify({
             type: 'positive',
             timeout: 1000,

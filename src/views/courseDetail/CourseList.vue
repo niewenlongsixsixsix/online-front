@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-        <div class="row justify-center " style="margin-top: 40px;">
+        <div class="courseList row justify-center " style="margin-top: 40px;">
             <div class="col-10 shadow-5" style="padding: 20px; border-radius: 10px">
                     <dl>
                         <dt>
@@ -7,37 +7,34 @@
                         </dt>
                         <dd>
                             <ul class="categoryUl">
-                                <li><a   href="#">全部</a></li>
-                                <li><a class="aActive" href="#">后端</a></li>
-                                <li><a href="#">前端</a></li>
-                                <li><a href="#">数据库</a></li>
-                                <li><a href="#">Android</a></li>
-                            </ul>
-                        </dd>
-                    </dl>
-                    <dl>
-                        <dt>
-                            <span>按时常</span>
-                        </dt>
-                        <dd>
-                            <ul class="categoryUl">
-                                <li><a   href="#">全部</a></li>
-                                <li ><a href="#" class="aActive">Java</a></li>
-                                <li><a  href="#">Mybatis</a></li>
-                                <li><a href="#">SpringMVC</a></li>
-                                <li><a href="#">Redis</a></li>
-                                <li><a href="#">Shiro</a></li>
+                                <li v-for="(item,index) in categoryList" :key="index"  class="cursor-pointer" @click="activedLi(item.id)">
+                                    <a :class="{aActive: item.id == activeId}"> {{item.name}}</a>
+                                </li>
                             </ul>
                         </dd>
                     </dl>
             </div>
 
+            <!--最热课程组件-->
+            <CourseShow style="background: rgb(243,243,243);" v-bind:imgList="hotCourseList" >
+                <template slot-scope="props">
+                    <div class="col-3" @click="JumpCourseInfo(props.item.id)">
+                        <q-card-media  class="shadow-10"   style="border-radius:10px">
+                            <img class="m-img" :src="'/api/upload' + props.item.imgUrl">
+                            <!-- 注意slot="overlay" -->
+                            <q-card-title slot="overlay" class="cursor-pointer">
+                                <div key="title" >
+                                    {{props.item.title}}
+                                    <div>
+                                        <q-icon name="visibility">
+                                        </q-icon>
+                                        &nbsp;{{props.item.view}}
+                                    </div>
+                                </div>
+                            </q-card-title>
 
-            <CourseShow class=" wow slideInUp " style="background: rgb(255,255,255);" v-bind:imgList="hotCourseList">
-                <template v-slot:courseTitle>
-            <span style="padding:2px; font-size: 20px; height: 80px; line-height: 80px; border-bottom: 2px #8d84cc solid; color: #4d555d; font-weight: bold;">
-              课程
-            </span>
+                        </q-card-media>
+                    </div>
                 </template>
             </CourseShow>
 
@@ -61,27 +58,75 @@
     import QCard from "quasar-framework/src/components/card/QCard";
     import CourseShow from "@/views/course/CourseShow";
     import ChapterList from "@/views/courseDetail/ChapterList";
+    import QSpinnerGears from "quasar-framework/src/components/spinner/QSpinnerGears";
+    import QSpinnerAudio from "quasar-framework/src/components/spinner/QSpinnerAudio";
     export default {
         name: "CourseList",
         components: {QCard,CourseShow},
         data(){
             return{
                 hotCourseList:[],
-                page4: 9
+                page4: 9,
+                categoryList: [],
+                activeId: 12410
             }
         },
+        methods:{
+            JumpCourseInfo(courseId){
+                this.$router.push("/courseInfo/" + courseId)
+            },
+            activedLi(val){
+                this.activeId = val;
+                this.getAllCategoryByCategoryId();
+            },
+            getAllCategory(){
+                this.$axios({
+                    method:'get',
+                    url:'/api/classification/getAllClassification'
+                }).then(response=>{
+                    this.categoryList = response.data
+                })
+            },
+            getAllCategoryByCategoryId(){
+                this.$q.loading.show({
+                    spinner: QSpinnerAudio,
+                    message: '数据加载中',
+                    spinnerSize: 250, // 像素
+                    spinnerColor: 'white',
+                })
+
+                this.$axios({
+                    method:'get',
+                    url:'/api/course/getCourseByClassification/' + this.activeId
+                }).then(response=>{
+                    setTimeout(()=>{
+                        this.hotCourseList = response.data;
+                        this.$q.loading.hide();
+                    },500)
+
+                })
+            }
+        },
+
         created(){
-            this.$axios({
-                method:'get',
-                url:'https://www.easy-mock.com/mock/5ca888dd4f62671c250622bb/course/hotCourseList'
-            }).then(response=>{
-                this.hotCourseList = response.data.hotCourseList
-            })
+            this.getAllCategory();
+            this.getAllCategoryByCategoryId();
         }
     }
 </script>
 
 <style scoped>
+
+    .courseList img{
+        cursor: pointer;
+        transition:all 0.8s;
+        height: 180px;
+    }
+
+    .courseList img:hover{
+        transform: scale(1.3);
+
+    }
     .categoryUl li{
         float:left;
         margin-right: 10px;
@@ -99,11 +144,12 @@
         vertical-align: baseline;
         background: transparent;
         text-decoration:none;
+        transition: color .6s,background-color .6s;
     }
 
     .categoryUl li a:hover{
         color: #fff;
-        background: #ff662f;
+        background-color: #ff662f;
     }
 
     dl {

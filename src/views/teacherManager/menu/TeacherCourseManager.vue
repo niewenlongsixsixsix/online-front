@@ -254,15 +254,13 @@
 
             getAllCourseByUserId(){
                 this.loading = true;
-                setTimeout(()=>{
                     this.$axios({
                         method:'get',
-                        url:'/api/course/getAllCourseByUserId/0',
+                        url:'/api/course/getAllCourseByUserId',
                     }).then(response=>{
                         this.courseData = response.data;
                         this.loading = false;
                     })
-                },1500)
             }
         },
         created(){

@@ -105,6 +105,7 @@
           alertImgTitle(title){
               alert(title);
           },
+
           //获取最热的笔记列表
           getHotCourseList(){
               this.$axios({

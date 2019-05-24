@@ -19,6 +19,7 @@
                     </div>
                 </div>
 
+                <q-btn flat color="secondary" @click="logout" label="安全退出" />
             </q-layout-header>
 
             <q-layout-drawer side="left" v-model="teacherManagerMenuVisible">
@@ -54,6 +55,25 @@
                     {title:'我的课程',icon:'voice_chat',path:'/teacherManagerHome/teacherManagerCenter',color:'secondary'},
                 ],
             }
+        },
+        methods:{
+            logout(){
+                this.$axios({
+                    method:'get',
+                    url:'/api/login/logout'
+                }).then(response=>{
+                    if(response.data.success){
+                        localStorage.removeItem("cookie");
+                        this.$router.push("/login")
+                        this.$q.notify({
+                            type: 'positive',
+                            timeout: 1000,
+                            position: 'top',
+                            message:"退出登录"
+                        })
+                    }
+                })
+            },
         }
     }
 </script>

@@ -51,11 +51,11 @@ export default new Router({
               component:TeacherCourseManager
             },
             {
-              path:'BigChapterManager/:bigChapterId',
+              path:'BigChapterManager/:courseId',
               component:BigChapterManager
             },
             {
-              path:'SmallChapterManager/:smallChapterId',
+              path:'SmallChapterManager/:bigChapterId',
               component:SmallChapterManager
             }
           ]
@@ -97,18 +97,18 @@ export default new Router({
           ]
         },
         {
-          path: 'courseInfo',
-          name: 'courseInfo',
+          path: 'courseInfo/:courseId',
           component:CourseInfo
         }
       ]
     },
     {
-      path:'/ChapterVideoLayout',
+      path:'/ChapterVideoLayout/:smallChapterId',
       component:ChapterVideoLayout
     },
     {
       path:'/editor',
+      name:'editor',
       component:Editor
     },
 

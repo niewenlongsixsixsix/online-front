@@ -2,7 +2,7 @@
     <div class="courseManager row justify-center">
 
         <q-modal v-model="opened">
-            <q-card style="width: 500px; height: 250px;">
+            <q-card style="width: 500px; height: 300px;">
                 <q-card-title>
                     课程信息编辑
                 </q-card-title>
@@ -12,18 +12,21 @@
                     <q-field
                             label="章节标题"
                     >
-                        <q-input/>
+                        <q-input v-model="BigChapterInfo.title"/>
                     </q-field>
                     <q-field
                             label="章节描述"
                     >
-                        <q-input/>
+                        <q-input v-model="BigChapterInfo.chapterDescribe "
+                                 type="textarea"
+                                 :max-height="30"
+                                 rows="3"/>
                     </q-field>
                 </q-card-main>
                 <q-card-actions align="end" style="margin-right: 10px">
 
                     <q-btn flat label="操作取消"  @click=" opened = false"/>
-                    <q-btn   label="确认提交" color="primary" />
+                    <q-btn   label="确认提交" @click="addOrEditSubmit" color="primary" />
 
                 </q-card-actions>
             </q-card>
@@ -40,7 +43,7 @@
                     separator="horizontal"
             >
                 <div slot="top-right" slot-scope="props" class="row">
-                    <q-btn color="primary"  label="添加章节"/>
+                    <q-btn color="primary" @click="addChapterBtn"  label="添加章节"/>
                 </div>
                 <div slot="top-left" >
                     <q-btn color="primary" @click="historyBack" flat icon="reply"/>
@@ -59,8 +62,8 @@
                     <q-td key="action" :props="props">
 
                         <q-btn-group>
-                            <q-btn  icon="create" size="sm"  color="primary" label="编辑" @click=""  @click="opened = !opened"/>
-                            <q-btn  icon="visibility" size="sm"  color="info" label="查看具体课程" @click="alertTitle(props.row.id)" />
+                            <q-btn  icon="create" size="sm"  color="primary" label="编辑"  @click="updateChapterBtn(props.row)"/>
+                            <q-btn  icon="visibility" size="sm"  color="info" label="查看具体课程" @click="viewSmallChapter(props.row.id)" />
                             <q-btn  icon="delete" size="sm"  color="negative" label="删除" @click="alertTitle(props.row.title)" />
                         </q-btn-group>
                     </q-td>
@@ -84,6 +87,13 @@
             return{
                 opened: false,
                 loading:false,
+                bigChapterId:null,
+                BigChapterInfo:{
+                    title:null,
+                    chapterDescribe:null,
+                },
+                addOrEdit:null,
+                addOrEditChapterUrl:'',
                 columns: [
                     {
                         name: 'title',
@@ -114,11 +124,59 @@
             }
         },
         methods:{
+
+            addChapterBtn(){
+              this.opened = true;
+
+              this.BigChapterInfo.title = null;
+              this.BigChapterInfo.chapterDescribe = null;
+
+              this.addOrEditChapterUrl = '/api/bigChapter/addOrEditBigChapter/1'
+            },
+
+            updateChapterBtn(row){
+                this.opened = true;
+
+                console.log(row);
+
+                this.bigChapterId = row.id
+               this.BigChapterInfo.title = row.title;
+               this.BigChapterInfo.chapterDescribe = row.describe;
+
+               console.log(this.BigChapterInfo.chapterDescribe)
+
+               this.addOrEditChapterUrl = '/api/bigChapter/addOrEditBigChapter/0'
+            },
+
+            addOrEditSubmit(){
+                console.log(this.addOrEditChapterUrl)
+
+                this.$axios({
+                    method:'post',
+                    url:this.addOrEditChapterUrl,
+                    data:{
+                        BigChapterInfo:this.BigChapterInfo,
+                        bigChapterId:this.bigChapterId,
+                        courseId:this.$route.params.courseId
+                    }
+                }).then(response=>{
+                    if(response.data){
+                        this.getAllBigChapterByCourse(this.$route.params.courseId)
+                        this.$q.notify({
+                            type: 'positive',
+                            timeout: 2000,
+                            position: 'top',
+                            message:'操作成功'
+                        })
+                    }
+                    this.opened = false;
+                })
+            },
             historyBack(){
                 this.$router.go(-1)
             },
-            alertTitle(val){
-                alert(val);
+            viewSmallChapter(id){
+                this.$router.push('/teacherManagerHome/teacherManagerCenter/SmallChapterManager/' + id)
             },
             getAllBigChapterByCourse(courseId){
                 this.loading = true;
@@ -134,7 +192,7 @@
             }
         },
         created(){
-            this.getAllBigChapterByCourse(this.$route.params.bigChapterId)
+            this.getAllBigChapterByCourse(this.$route.params.courseId)
         }
     }
 </script>
