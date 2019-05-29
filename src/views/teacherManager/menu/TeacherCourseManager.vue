@@ -97,7 +97,6 @@
                            <q-btn   size="sm"  color="warning" @click="imgUploadBtn(props.row.id)" label="更新封面"/>
                            <q-btn   size="sm"  color="primary" label="编辑基本信息" @click="updateCourseBtn(props.row)"/>
                            <q-btn   size="sm" color="info" label="查看章节" @click="viewChapter(props.row.id)" />
-                           <q-btn   size="sm" color="negative" label="删除" @click="alertTitle(props.row.title)" />
                        </q-btn-group>
                    </q-td>
                </q-tr>

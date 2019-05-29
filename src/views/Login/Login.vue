@@ -18,16 +18,16 @@
                 <q-input float-label="密码"  type="password" v-model="form.password" color="light-blue"  @keyup.enter="simulateSubmit"/>
             </q-field>
 
-            <q-field>
-                <q-toggle v-model="checked"
-                          style="float:left;font-size: 14px; margin-top: 15px; margin-left: 3px;"
-                          icon="tag_faces"
-                          color="light-blue"
-                          label="记住密码" />
-                <span class="forgetPassword notificeText">
-                    忘记密码?
-                </span>
-            </q-field>
+            <!--<q-field>-->
+                <!--<q-toggle v-model="checked"-->
+                          <!--style="float:left;font-size: 14px; margin-top: 15px; margin-left: 3px;"-->
+                          <!--icon="tag_faces"-->
+                          <!--color="light-blue"-->
+                          <!--label="记住密码" />-->
+                <!--<span class="forgetPassword notificeText">-->
+                    <!--忘记密码?-->
+                <!--</span>-->
+            <!--</q-field>-->
             <!--<div>-->
                 <!--<q-input-->
                         <!--v-model="form.email"-->
@@ -49,12 +49,12 @@
                       一个带有v-model设置来控制提交的按钮。
                       v-model范围变量必须是严格的布尔值
                     -->
-                    <q-btn :loading="submitting" style="width: 250px; margin-top: 20px"  @click="simulateSubmit" label="登录" color="light-blue">
+                    <q-btn :loading="submitting" style="width: 250px; margin-top: 40px"  @click="simulateSubmit" label="登录" color="light-blue">
                         <q-spinner-facebook slot="loading" />
                     </q-btn>
             </q-field>
             <q-field>
-                <span @click="submit" class="toRegister notificeText">
+                <span @click="jumpRegister" class="toRegister notificeText">
                     注册账号->
                 </span>
             </q-field>
@@ -89,13 +89,8 @@
             }
         },
         methods:{
-            submit(){
-                this.$axios({
-                    method:'get',
-                    url:'/api/user/getAllUser'
-                }).then(response=>{
-                    console.log(response.data)
-                })
+            jumpRegister(){
+                this.$router.push("/register")
             },
             simulateSubmit () {
                 this.submitting = true

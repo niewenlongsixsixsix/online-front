@@ -6,7 +6,7 @@
             <q-layout-header color="secondary" style="box-shadow: 0 1px 2px rgba(0,0,0,0.2), 0 3px 2px rgba(0,0,0,0.14), 0 3px 3px -2px rgba(0,0,0,0.12)">
 
                 <div class="row justify-center">
-                    <div class="col-12">
+                    <div class="col-11">
                         <q-toolbar color="fontcolor"  style="height: 64px;" >
 
                             <i class="fab fa-phoenix-squadron" style="color: #fd7e14; font-size: 35px"></i>
@@ -15,11 +15,12 @@
                                 <strong style="color: #5e5e5e;">酸奶网课教师管理中心</strong>
                             </q-toolbar-title>
 
+                            <q-btn flat color="secondary" style="float:right" @click="logout" label="安全退出" />
                         </q-toolbar>
                     </div>
                 </div>
 
-                <q-btn flat color="secondary" @click="logout" label="安全退出" />
+
             </q-layout-header>
 
             <q-layout-drawer side="left" v-model="teacherManagerMenuVisible">

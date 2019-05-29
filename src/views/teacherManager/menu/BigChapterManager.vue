@@ -64,7 +64,6 @@
                         <q-btn-group>
                             <q-btn  icon="create" size="sm"  color="primary" label="编辑"  @click="updateChapterBtn(props.row)"/>
                             <q-btn  icon="visibility" size="sm"  color="info" label="查看具体课程" @click="viewSmallChapter(props.row.id)" />
-                            <q-btn  icon="delete" size="sm"  color="negative" label="删除" @click="alertTitle(props.row.title)" />
                         </q-btn-group>
                     </q-td>
                 </q-tr>

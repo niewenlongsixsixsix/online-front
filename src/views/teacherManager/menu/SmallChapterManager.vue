@@ -93,7 +93,6 @@
                         <q-btn-group>
                             <q-btn   size="sm"  color="primary" label="上传视频"  @click="uploadVideoBtn(props.row)"/>
                             <q-btn   size="sm"  color="info" label="编辑" @click="updateSmallChapterBtn(props.row)" />
-                            <q-btn   size="sm"  color="negative" label="删除" @click="alertTitle(props.row.title)" />
                         </q-btn-group>
                     </q-td>
                 </q-tr>

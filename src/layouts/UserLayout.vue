@@ -51,7 +51,7 @@
 
 
                             <q-list no-border link  highlight sparse >
-                                <q-item tag="li" router-link-active v-for="(item,index) in infoList"  exact :to="item.path" :key="index" @click="itemActive">
+                                <q-item tag="li" router-link-active v-for="(item,index) in infoList"  exact :to="item.path" :key="index">
                                     <q-item-side :icon="item.icon" :color="item.color" />
                                     <q-item-main :label="item.title" />
                                 </q-item>

@@ -25,11 +25,6 @@
                             <q-card-title slot="overlay" class="cursor-pointer">
                                 <div key="title" >
                                     {{props.item.title}}
-                                    <div>
-                                        <q-icon name="visibility">
-                                        </q-icon>
-                                        &nbsp;{{props.item.view}}
-                                    </div>
                                 </div>
                             </q-card-title>
 
@@ -37,18 +32,6 @@
                     </div>
                 </template>
             </CourseShow>
-
-            <q-page style="min-height: 0px; margin-bottom: 100px">
-                <q-pagination
-                        v-model="page4"
-                        color="warning"
-                        :min="7"
-                        :max="18"
-                        :max-pages="8"
-                        boundary-links
-                        direction-links
-                />
-            </q-page>
         </div>
 
 

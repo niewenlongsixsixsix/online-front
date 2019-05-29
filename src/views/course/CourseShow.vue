@@ -7,7 +7,10 @@
 
                 </slot>
             </div>
-            <span class="text-weight-bold" style="float: right; margin-top: 20px;  cursor: pointer;"><slot name="changeText"></slot> </span>
+            <span class="text-weight-bold" style="float: right; margin-top: 20px;  cursor: pointer;">
+                <slot name="changeText">
+
+            </slot> </span>
         </div>
     </div>
 </template>

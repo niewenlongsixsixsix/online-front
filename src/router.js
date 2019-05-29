@@ -20,6 +20,7 @@ import BigChapterManager from "@/views/teacherManager/menu/BigChapterManager";
 import SmallChapterManager from "@/views/teacherManager/menu/SmallChapterManager";
 import TeacherInfoCenter from "@/views/teacherManager/menu/TeacherInfoCenter";
 import TeacherManagerCenter from "@/views/teacherManager/menu/TeacherManagerCenter";
+import NoteDetail from "@/views/note/NoteDetail";
 
 Vue.use(Router)
 
@@ -83,6 +84,11 @@ export default new Router({
           path: 'courseList',
           name: 'courseList',
           component: CourseListLayout
+        },
+        {
+          path:'noteDetail/:noteId?',
+          name:'NoteDetail',
+          component:NoteDetail
         },
         {
           path: 'userLayout',
